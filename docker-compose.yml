@@ -1,7 +1,15 @@
 services:
-  template_service:
+  flow_metric_service:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8001:8001"
+      - "${COMPOSE_PORT:-8001}:${COMPOSE_PORT:-8001}"
+    env_file: []  # Don't pass .env to container
+    environment:
+      - PORT=${COMPOSE_PORT:-8001}
+      - DATA_DIR=/data/ifcb
+      - MODEL_PATH=/models/classifier.pkl
+    volumes:
+      - ${COMPOSE_IFCB_DATA_DIR:-./data}:/data/ifcb:ro
+      - ${COMPOSE_MODEL_DIR:-./models}:/models:ro

@@ -21,4 +21,4 @@ RUN uv pip install --system .
 
 EXPOSE 8001
 
-CMD ["uvicorn", "template_service.main:app", "--host", "0.0.0.0", "--port", "8001"]
+CMD ["sh", "-c", "uvicorn flow_metric_service.main:app --host 0.0.0.0 --port ${PORT:-8001}"]
